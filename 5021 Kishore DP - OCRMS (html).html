@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>OCRMS - HTML only</title>
+</head>
+<body>
+<header>
+  <h1>OCRMS: Online Complaint Registration and Management System</h1>
+  <p>Street lights, water leaks, drains and roads: report it, track it, see it fixed</p>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#register">Register / Login</a>
+    <a href="#file">File Complaint</a>
+    <a href="#mine">My Complaints</a>
+    <a href="#dept">Department Queue</a>
+    <a href="#officer">Officer Work List</a>
+    <a href="#dash">Dashboard</a>
+  </nav>
+</header>
+<main>
+<section id="home">
+  <h2>Track a complaint</h2>
+  <form id="lookupForm">
+    <label for="lookupId">Complaint ID</label>
+    <input id="lookupId" placeholder="CMP-2026-000101" required>
+    <button type="submit">Track</button>
+  </form>
+  <div id="lookupResult"></div>
+  <h3>Complaint categories, departments and default SLA</h3>
+  <table>
+    <thead><tr><th>Category</th><th>Typical problems</th><th>Department</th><th>SLA (days)</th></tr></thead>
+    <tbody>
+      <tr><td>Street Light</td><td>Lamp not working, flickering, pole damaged</td><td>Electrical</td><td>3</td></tr>
+      <tr><td>Water Pipe Leakage</td><td>Burst pipe, leaking joint, low pressure</td><td>Water Supply</td><td>2</td></tr>
+      <tr><td>Rain Water Drainage</td><td>Blocked drain, overflow, waterlogging</td><td>Drainage and Sanitation</td><td>3</td></tr>
+      <tr><td>Road Problem</td><td>Pothole, broken surface, missing signage</td><td>Roads and Works</td><td>7</td></tr>
+      <tr><td>Other</td><td>Garbage, stray animals, public toilets</td><td>Admin-defined</td><td>7</td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="register">
+  <h2>Register / Login</h2>
+  <form>
+    <fieldset>
+      <legend>Citizen registration</legend>
+      <label>Name <input required></label>
+      <label>Mobile <input type="tel" required></label>
+      <label>Email <input type="email" required></label>
+      <label>Ward
+        <select><option>Ward 1 - Ambattur</option><option>Ward 2 - Anna Nagar</option><option>Ward 3 - Adyar</option><option>Ward 4 - T. Nagar</option><option>Ward 5 - Mylapore</option><option>Ward 6 - Guindy</option><option>Ward 7 - Perambur</option><option>Ward 8 - Velachery</option></select>
+      </label>
+      <label>Address <input required></label>
+      <label>Password <input type="password" required></label>
+      <button type="submit">Register and send OTP</button>
+    </fieldset>
+  </form>
+  <form>
+    <fieldset>
+      <legend>Login</legend>
+      <label>Mobile or email <input required></label>
+      <label>Password <input type="password" required></label>
+      <button type="submit">Log in</button>
+    </fieldset>
+  </form>
+</section>
+
+<section id="file">
+  <h2>File a complaint (Citizen)</h2>
+  <form id="fileForm">
+    <label>Category
+      <select id="fCat">
+        <option>Street Light</option><option>Water Pipe Leakage</option>
+        <option>Rain Water Drainage</option><option>Road Problem</option><option>Other</option>
+      </select>
+    </label>
+    <label>Sub-type
+      <select id="fSub">
+        <optgroup label="Street Light"><option>Lamp not working</option><option>Flickering</option><option>Pole damaged</option></optgroup>
+        <optgroup label="Water Pipe Leakage"><option>Burst pipe</option><option>Leaking joint</option><option>Low pressure</option></optgroup>
+        <optgroup label="Rain Water Drainage"><option>Blocked drain</option><option>Overflow</option><option>Waterlogging</option></optgroup>
+        <optgroup label="Road Problem"><option>Pothole</option><option>Broken surface</option><option>Missing signage</option></optgroup>
+        <optgroup label="Other"><option>Garbage</option><option>Stray animals</option><option>Public toilet</option></optgroup>
+      </select>
+    </label>
+    <label>Description (min 20 characters) <textarea id="fDesc" rows="3" required></textarea></label>
+    <label>Ward
+      <select id="fWard"><option>Ward 1 - Ambattur</option><option>Ward 2 - Anna Nagar</option><option>Ward 3 - Adyar</option><option>Ward 4 - T. Nagar</option><option>Ward 5 - Mylapore</option><option>Ward 6 - Guindy</option><option>Ward 7 - Perambur</option><option>Ward 8 - Velachery</option></select>
+    </label>
+    <label>Landmark <input id="fLand" placeholder="Near the bus stop"></label>
+    <label>Photos (up to 3, JPG or PNG, 5 MB each) <input id="fPhotos" type="file" accept="image/png,image/jpeg" multiple></label>
+    <label><input id="fUrgent" type="checkbox"> Urgent hazard (live wire, burst main), subject to officer verification</label>
+    <button type="submit">Submit complaint</button>
+  </form>
+  <p id="fileMsg"></p>
+</section>
+
+<section id="mine">
+  <h2>My complaints (Citizen)</h2>
+  <label>Filter by status
+    <select id="fStatus"><option>All</option><option>Registered</option><option>Assigned</option><option>In Progress</option><option>Resolved</option><option>Closed</option><option>Rejected</option><option>Escalated</option></select>
+  </label>
+  <table>
+    <thead><tr><th>ID</th><th>Category</th><th>Ward</th><th>Status</th><th>Action</th></tr></thead>
+    <tbody id="mineBody">
+      <tr><td>CMP-2026-000101</td><td>Street Light</td><td>Ward 4</td><td>Registered</td><td>Waiting for assignment</td></tr>
+      <tr><td>CMP-2026-000105</td><td>Street Light</td><td>Ward 4</td><td>Resolved</td><td><button>Confirm fix</button> <button>Reopen</button></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="dept">
+  <h2>Department queue (Department Head)</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Category</th><th>Ward</th><th>Priority</th><th>Status</th><th>Due in</th><th>Action</th></tr></thead>
+    <tbody id="deptBody">
+      <tr><td>CMP-2026-000101</td><td>Street Light</td><td>Ward 4</td><td>Normal</td><td>Registered</td><td>66h</td><td><select><option>Ravi</option><option>Karthik</option></select> <button>Assign</button> <button>Reject</button></td></tr>
+      <tr><td>CMP-2026-000102</td><td>Water Pipe Leakage</td><td>Ward 5</td><td>Urgent</td><td>Registered</td><td>8h</td><td><select><option>Meena</option><option>Divya</option></select> <button>Assign</button> <button>Reject</button></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="officer">
+  <h2>Officer work list</h2>
+  <table>
+    <thead><tr><th>ID</th><th>Category</th><th>Ward</th><th>Status</th><th>Due in</th><th>Action</th></tr></thead>
+    <tbody id="officerBody">
+      <tr><td>CMP-2026-000103</td><td>Road Problem</td><td>Ward 2</td><td>Assigned</td><td>144h</td><td><button>Start work</button></td></tr>
+      <tr><td>CMP-2026-000104</td><td>Rain Water Drainage</td><td>Ward 1</td><td>In Progress</td><td>12h</td><td><button>Mark Resolved</button></td></tr>
+    </tbody>
+  </table>
+</section>
+
+<section id="dash">
+  <h2>Dashboard and reports (Admin)</h2>
+  <table>
+    <thead><tr><th>Status</th><th>Complaints</th></tr></thead>
+    <tbody id="dashBody">
+      <tr><td>Registered</td><td>2</td></tr>
+      <tr><td>Assigned</td><td>1</td></tr>
+      <tr><td>In Progress</td><td>1</td></tr>
+      <tr><td>Resolved</td><td>1</td></tr>
+      <tr><td>Closed</td><td>0</td></tr>
+      <tr><td>Rejected</td><td>0</td></tr>
+      <tr><td>Escalated</td><td>0</td></tr>
+    </tbody>
+  </table>
+  <p>SLA compliance = resolved on time / resolved &times; 100%</p>
+  <p>Average resolution time = sum of (resolved time - created time) / number resolved</p>
+</section>
+</main>
+<footer><p>Kishore DP | 111726115021 | ECE (VLSI), RMK Engineering College</p></footer>
+</body>
+</html>
